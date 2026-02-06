@@ -9,9 +9,6 @@ def start_pipeline():
 
 def validate_environment():
     print("Environment validated successfully")
-    validate = PythonOperator(
-    task_id="validate_environment",
-    python_callable=validate_environment,
 
 
 def end_pipeline():
