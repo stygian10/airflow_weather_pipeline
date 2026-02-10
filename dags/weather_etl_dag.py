@@ -1,35 +1,24 @@
 from datetime import datetime, timedelta
-
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
-# Import utility function from dags/utils
-from utils.extract_weather import extract_weather_data
+from tasks.extract_weather import extract_weather_data
+from tasks.transform_weather import transform_weather_data
 
-
-def end_pipeline():
-    """
-    Final task to mark successful DAG completion.
-    """
-    print("Weather ETL pipeline completed successfully")
-
-
-
-# Default DAG arguments
 
 default_args = {
     "owner": "airflow",
-    "depends_on_past": False,
     "retries": 1,
     "retry_delay": timedelta(minutes=5),
 }
 
 
-# DAG definition
+def end_pipeline():
+    print("Weather ETL pipeline finished")
+
 
 with DAG(
     dag_id="weather_etl_basic",
-    description="Basic Airflow DAG for weather data extraction",
     default_args=default_args,
     start_date=datetime(2026, 2, 3),
     schedule="@daily",
@@ -37,9 +26,14 @@ with DAG(
     tags=["portfolio", "weather", "airflow"],
 ) as dag:
 
-    extract_weather = PythonOperator(
+    extract_task = PythonOperator(
         task_id="extract_weather_data",
         python_callable=extract_weather_data,
+    )
+
+    transform_task = PythonOperator(
+        task_id="transform_weather_data",
+        python_callable=transform_weather_data,
     )
 
     end_task = PythonOperator(
@@ -47,5 +41,4 @@ with DAG(
         python_callable=end_pipeline,
     )
 
-    # Task dependencies
-    extract_weather >> end_task
+    extract_task >> transform_task >> end_task
