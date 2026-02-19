@@ -4,7 +4,7 @@
 
 ## Overview
 
-This project implements a **multi-city weather ETL pipeline** using **Python and Apache Airflow**, designed to extract, transform, load, and validate weather data for **London, New_York, and Tokyo**.
+This project implements a **multi-city weather ETL pipeline** using **Python and Apache Airflow**, designed to extract, transform, load, and validate weather data for **London, Menchester, and Edinburgh**.
 
 It demonstrates:
 
