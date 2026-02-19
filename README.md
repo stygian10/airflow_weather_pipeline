@@ -82,7 +82,7 @@ SELECT * FROM weather_data LIMIT 5;
 
 ---
 
-## Screenshots (Optional for Portfolio)
+## Screenshots
 
 * Airflow DAG UI view
 * Task logs showing row counts per city
